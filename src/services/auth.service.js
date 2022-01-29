@@ -4,6 +4,10 @@ export const login = async (user) => {
     const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(user),
+      mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
     })
     const userApi = await response.json()
     return userApi
