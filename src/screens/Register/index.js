@@ -1,21 +1,65 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Container from '../../components/Container'
+import Loading from '../../components/Loading'
 import Title from '../../components/Title'
 import { register } from '../../services/user.service'
 import './index.css'
 
 const Register = () => {
+  const navigate = useNavigate()
+
   const [user, setUser] = useState({
     email: '',
     phone: '',
     username: '',
     password: '',
   })
+  const { email, username, password, phone } = user
+
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    return () => setLoading(false)
+  }, [])
+
+  const resetValues = () => {
+    setUser({
+      email: '',
+      phone: '',
+      username: '',
+      password: '',
+    })
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    register(user)
-      .then((res) => console.log(res))
+    setLoading(true)
+    if ([email, username, password, phone].includes('')) {
+      setError('All fields are required')
+      setLoading(false)
+      return
+    }
+    const userInfo = {
+      ...user,
+      address: {
+        city: '',
+        street: '',
+        number: '',
+        zipcode: '',
+        geolocation: {
+          lat: '',
+          long: '',
+        },
+      },
+    }
+    register(userInfo)
+      .then(() => {
+        setLoading(false)
+        navigate('/login', { replace: true })
+        resetValues()
+      })
       .catch((err) => console.log(err))
   }
   return (
@@ -50,7 +94,8 @@ const Register = () => {
               onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
           </div>
-          <input type='submit' value='Register' className='register' />
+          {loading ? <Loading /> : <input type='submit' value='Register' className='register' />}
+          <p className='error'>{error}</p>
         </form>
       </div>
     </Container>

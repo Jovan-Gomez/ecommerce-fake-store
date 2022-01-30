@@ -70,3 +70,8 @@
   background-color: transparent;
   color: var(--primary);
 }
+
+.error {
+  text-align: center;
+  color: crimson;
+}

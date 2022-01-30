@@ -26,3 +26,9 @@
   background-color: var(--primary);
   color: var(--white);
 }
+
+@media (min-width: 768px) {
+  .about__short {
+    padding: 0 10rem;
+  }
+}

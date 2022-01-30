@@ -50,6 +50,23 @@
   color: var(--white);
 }
 
+.logout {
+  color: var(--gray);
+  font-size: 1.7rem;
+  font-weight: 500;
+  padding: 1rem;
+  transition: background-color 0.3s;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+
+.logout:hover {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
 /*
 **********************
 *********FOOTER*******

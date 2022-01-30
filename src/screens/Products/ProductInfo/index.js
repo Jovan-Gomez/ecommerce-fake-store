@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { AuthContext } from '../../../auth/authContext'
 import Spinner from '../../../components/Spinner'
 import { getProductById } from '../../../services/product.service'
 import '../index.css'
 
 const ProductInfo = () => {
+  const { token } = useContext(AuthContext)
+
   const [product, setProduct] = useState({})
   const [stars, setStars] = useState([])
   const [error, setError] = useState('')
@@ -60,7 +63,7 @@ const ProductInfo = () => {
                 <option value='6'>6</option>
                 <option value='7'>7</option>
               </select>
-              <input type='submit' value='Add to Card' />
+              {token ? <input type='submit' value='Add to Card' /> : <p>Login to add to cart</p>}
             </form>
           </div>
           {error && <p>{error}</p>}

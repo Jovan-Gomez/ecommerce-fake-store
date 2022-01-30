@@ -1,0 +1,28 @@
+.about__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+}
+
+@media (min-width: 768px) {
+  .about__container {
+    flex-direction: row;
+  }
+}
+
+.about__content {
+  padding: 0 5rem;
+  text-align: justify;
+}
+
+@media (min-width: 768px) {
+  .about__content {
+    text-align: center;
+  }
+}
+.why {
+  text-align: center;
+  font-size: 4rem;
+}

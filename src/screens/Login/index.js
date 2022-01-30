@@ -1,15 +1,47 @@
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../auth/authContext'
 import Container from '../../components/Container'
+import Loading from '../../components/Loading'
 import Title from '../../components/Title'
 import { login } from '../../services/auth.service'
+import { types } from '../../types'
 import './index.css'
 const Login = () => {
-  const [user, setUser] = useState({ username: '', password: '' })
+  const { dispatch } = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  const [user, setUser] = useState({ username: 'mor_2314', password: '83r5^_' })
+  const { username, password } = user
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    return () => setLoading(false)
+  }, [])
+
   const handleSubmit = (e) => {
     e.preventDefault()
+    setLoading(true)
+    if ([username, password].includes('')) {
+      setError('All fields are required')
+      setLoading(false)
+    }
     login(user)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err))
+      .then((token) => {
+        if (!token) {
+          setError('username or password is incorrect')
+          setLoading(false)
+          return
+        }
+        dispatch({
+          type: types.login,
+          payload: token,
+        })
+        setLoading(false)
+        navigate('/', { replace: true })
+      })
+      .catch((err) => setError(err))
   }
   return (
     <Container>
@@ -23,6 +55,7 @@ const Login = () => {
               type='text'
               name='username'
               id='username'
+              value={user.username}
               onChange={(e) => setUser({ ...user, username: e.target.value })}
             />
           </div>
@@ -32,10 +65,12 @@ const Login = () => {
               type='password'
               name='password'
               id='password'
+              value={user.password}
               onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
           </div>
-          <input type='submit' value='Login' className='login' />
+          {loading ? <Loading /> : <input type='submit' value='Login' className='login' />}
+          <p className='error'>{error}</p>
         </form>
       </div>
     </Container>
