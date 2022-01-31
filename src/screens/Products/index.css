@@ -13,6 +13,42 @@
   }
 }
 
+.search__bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+@media (min-width: 768px) {
+  .search__bar {
+    flex-direction: row;
+  }
+}
+.search__word {
+  display: flex;
+  border: 2px solid var(--primary);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+}
+.search__word label {
+  color: var(--primary);
+}
+.search__word input {
+  padding: 0.5rem 2rem;
+  border: none;
+  outline: none;
+  width: 100%;
+  color: var(--gray);
+}
+.search__category select {
+  color: var(--primary);
+  border: 3px solid var(--gray);
+  border-radius: 10px;
+  padding: 0 1rem;
+  outline: none;
+}
+
 .product {
   display: grid;
   grid-template-columns: 2fr 3fr;

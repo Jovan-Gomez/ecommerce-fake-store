@@ -19,3 +19,14 @@ export const getProductById = async (id) => {
     console.error(error)
   }
 }
+
+export const getAllCategories = async () => {
+  try {
+    const url = `${process.env.REACT_APP_API_URL}/products/categories`
+    const response = await fetch(url)
+    const categories = await response.json()
+    return categories
+  } catch (error) {
+    console.error(error)
+  }
+}
